@@ -124,6 +124,13 @@ export const CareerList: React.FC = () => {
         });
     }
 
+    const handleChangePage = (_: unknown, newPage: number) => setPage(newPage);
+
+    const handleChangeRowsPerPage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(parseInt(e.target.value, 10));
+        setPage(0);
+    };
+
     return (
         <Container sx={{ mt: 10 }}>
             <Typography variant='h4' gutterBottom>Carreras Técnicas</Typography>
@@ -150,7 +157,7 @@ export const CareerList: React.FC = () => {
                                     </IconButton>
                                 </TableCell>
                                 <TableCell align='right'>
-                                    <IconButton onClick={() => {handleDelete(career.carreraId)}} color='error'>
+                                    <IconButton onClick={() => { handleDelete(career.carreraId) }} color='error'>
                                         <DeleteIcon />
                                     </IconButton>
                                 </TableCell>
@@ -164,8 +171,7 @@ export const CareerList: React.FC = () => {
                             </TableRow>)}
                     </TableBody>
                 </Table>
-                <TablePagination component="div" count={careers.length} page={page} onPageChange={() => { }} rowsPerPage={rowsPerPage} rowsPerPageOptions={[5, 10, 20]} />
-            </TableContainer>
+ <TablePagination component="div" count={careers.length} page={page} onPageChange={handleChangePage} rowsPerPage={rowsPerPage} onRowsPerPageChange={handleChangeRowsPerPage} rowsPerPageOptions={[5, 10, 20]} />            </TableContainer>
             <Dialog open={modalOpen} maxWidth="sm" fullWidth onClose={handleCloseModal}>
                 <DialogTitle>{selectedCareer ? 'Editar Carrera' : 'Agregar Carrera'}</DialogTitle>
                 <DialogContent>
