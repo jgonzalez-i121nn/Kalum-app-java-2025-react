@@ -5,8 +5,9 @@ import { AppBarMenu } from './components/layout/AppBarMenu'
 import { useState } from 'react'
 import { SideNav } from './components/layout/SideNav';
 import { LoginForm } from './components/auth/LoginForm';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { CareerList } from './components/carers/CareerList';
 
 function App() {
 
@@ -36,7 +37,9 @@ function App() {
       <AppBarMenu onMenuClick={handleDrawerToggle} onLogout={handleLogout}></AppBarMenu>
       <SideNav open={draweOpen} onClose={handleDrawerToggle}></SideNav>
       <Routes>
-        <Route path='/login' element={<LoginForm onLoginSuccess={() => window.location.href = 'www.google.com.gt'} />} />
+        <Route path='/login' element={<LoginForm onLoginSuccess={() => window.location.href = '/careers'} />} />
+        <Route path='/careers' element={<CareerList />} />
+        <Route path='/' element={<Navigate to={"/careers"} />} />
       </Routes>
     </Router>
   )
