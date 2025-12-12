@@ -7,7 +7,7 @@ import { SideNav } from './components/layout/SideNav';
 import { LoginForm } from './components/auth/LoginForm';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import { CareerList } from './components/carers/CareerList';
+import { CareerList } from './components/careers/CareerList';
 
 function App() {
 
