@@ -3,19 +3,19 @@ import api from "./KalumManagementApi";
 export interface LoginResponse {
     success: boolean;
     message: string;
-    data:{
+    data: {
         token: string;
-        expiration: string;
+        expiration: string
     },
-    error:string[];
+    error: string[]
 }
 
-export const authServices = {
-    login: async  (userName:string, password:string): Promise<LoginResponse> => {
-     const response = await api.post<LoginResponse>('accounts/login', {userName, password});
-        return response.data;   
+export const authService = {
+    login: async (username:string, password:string): Promise<LoginResponse> => {
+        const response = await api.post<LoginResponse>('accounts/login', {username,password});
+        return response.data;
     },
     logout: () => {
         localStorage.removeItem('token');
-    }
+    } 
 }

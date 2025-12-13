@@ -1,4 +1,3 @@
-
 import { CssBaseline } from '@mui/material'
 import './App.css'
 import { AppBarMenu } from './components/layout/AppBarMenu'
@@ -11,12 +10,11 @@ import { CareerList } from './components/careers/CareerList';
 import { useAuth } from './hooks/useAuth';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 
-
 function App() {
 
   const { isAuthenticated, logout } = useAuth();
-  const [draweOpen, setDrawerOpen] = useState(false);
-  const handleDrawerToggle = () => setDrawerOpen(!draweOpen);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const handleDrawerToggle = () => setDrawerOpen(!drawerOpen);
 
   const handleLogout = () => {
     Swal.fire({
@@ -42,7 +40,7 @@ function App() {
       {isAuthenticated && (
         <>
           <AppBarMenu onMenuClick={handleDrawerToggle} onLogout={handleLogout}></AppBarMenu>
-          <SideNav open={draweOpen} onClose={handleDrawerToggle}></SideNav>
+          <SideNav open={drawerOpen} onClose={handleDrawerToggle}></SideNav>
         </>
       )}
 
@@ -52,9 +50,7 @@ function App() {
           <ProtectedRoute>
           <CareerList />
           </ProtectedRoute>
-
-        }
-        />
+        }/>
         <Route path='/' element={<Navigate to={"/careers"} />} />
       </Routes>
     </Router>
