@@ -8,9 +8,13 @@ import { LoginForm } from './components/auth/LoginForm';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { CareerList } from './components/careers/CareerList';
+import { useAuth } from './hooks/useAuth';
+import { ProtectedRoute } from './routes/ProtectedRoute';
+
 
 function App() {
 
+  const { isAuthenticated, logout } = useAuth();
   const [draweOpen, setDrawerOpen] = useState(false);
   const handleDrawerToggle = () => setDrawerOpen(!draweOpen);
 
@@ -25,6 +29,7 @@ function App() {
       confirmButtonText: 'Sí'
     }).then((result) => {
       if (result.isConfirmed) {
+        logout();
         window.location.href = '/login';
       }
     });
@@ -34,11 +39,22 @@ function App() {
   return (
     <Router>
       <CssBaseline />
-      <AppBarMenu onMenuClick={handleDrawerToggle} onLogout={handleLogout}></AppBarMenu>
-      <SideNav open={draweOpen} onClose={handleDrawerToggle}></SideNav>
+      {isAuthenticated && (
+        <>
+          <AppBarMenu onMenuClick={handleDrawerToggle} onLogout={handleLogout}></AppBarMenu>
+          <SideNav open={draweOpen} onClose={handleDrawerToggle}></SideNav>
+        </>
+      )}
+
       <Routes>
         <Route path='/login' element={<LoginForm onLoginSuccess={() => window.location.href = '/careers'} />} />
-        <Route path='/careers' element={<CareerList />} />
+        <Route path='/careers' element={
+          <ProtectedRoute>
+          <CareerList />
+          </ProtectedRoute>
+
+        }
+        />
         <Route path='/' element={<Navigate to={"/careers"} />} />
       </Routes>
     </Router>

@@ -1,0 +1,21 @@
+import api from "./KalumManagementApi";
+
+export interface LoginResponse {
+    success: boolean;
+    message: string;
+    data:{
+        token: string;
+        expiration: string;
+    },
+    error:string[];
+}
+
+export const authServices = {
+    login: async  (userName:string, password:string): Promise<LoginResponse> => {
+     const response = await api.post<LoginResponse>('accounts/login', {userName, password});
+        return response.data;   
+    },
+    logout: () => {
+        localStorage.removeItem('token');
+    }
+}
